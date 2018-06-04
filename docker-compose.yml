@@ -14,6 +14,7 @@ services:
     links:
       - gogs:gogs
       - registry:registry
+      - drone-server:drone-server
 
   gogs:
     image: gogs/gogs:0.11.43
@@ -37,3 +38,27 @@ services:
       - ./auth:/auth
       - ./certs:/certs
       - ./temp/registry:/var/lib/registry
+
+  drone-server:
+    image: drone/drone:0.8
+    ports:
+      - 20080:8000
+      - 20090:9000
+    environment:
+      - DRONE_OPEN=true
+      - DRONE_HOST=https://ci.demo.com
+      - DRONE_SECRET=drone-secret
+      - DRONE_GOGS=true
+      - DRONE_GOGS_URL=http://git.demo.com:3000
+    volumes:
+      - ./temp/drone:/var/lib/drone
+    links:
+      - gogs:git.demo.com
+
+  drone-agent:
+    image: drone/agent:0.8
+    environment:
+      - DRONE_SERVER=ci.demo.com:20090
+      - DRONE_SECRET=drone-secret
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
