@@ -9,7 +9,7 @@ archive_files()
 {
   echo "Archive files into ${archive_file_name} ..."
   rm -rf "${rootdir}/${archive_file_name}"
-  tar czf "${rootdir}/${archive_file_name}" auth certs config data init/start.sh
+  tar czf "${rootdir}/${archive_file_name}" auth certs config data start.sh docker-compose.yml
   echo "Archive files done"
 }
 

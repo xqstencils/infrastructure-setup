@@ -6,15 +6,14 @@ rootdir="$(cd ${basedir}/../ && pwd)"
 source "${basedir}/sync_files.sh"
 
 deploy_env=$1
-service_name="nginx"
-target_dir="/opt/nginx"
+target_dir="/opt/infrastructure"
 
-echo "Deploy Nginx service to ${key_name} ..."; echo
+echo "Deploy Infrastructure services to ${key_name} ..."; echo
 
 echo "===================== Sync Files ==============="; echo
 sync_files ${deploy_env} ${target_dir}
 
 echo "===================== Start docker ==============="; echo
-ssh ${deploy_env} "${target_dir}/init/start.sh"
+ssh ${deploy_env} "${target_dir}/start.sh"
 
-echo "Deploy Nginx service done."
+echo "Deploy Infrastructure services done."
