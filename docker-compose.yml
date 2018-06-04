@@ -11,3 +11,13 @@ services:
       - ./certs:/certs
       - ./config/nginx:/etc/nginx
       - ./data/www:/data/www
+    links:
+      - gogs:gogs
+
+  gogs:
+    image: gogs/gogs:0.11.43
+    ports:
+      - "10022:22"
+      - "10080:3000"
+    volumes:
+      - ./temp/gogs:/data
