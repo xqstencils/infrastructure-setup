@@ -13,6 +13,7 @@ services:
       - ./data/www:/data/www
     links:
       - gogs:gogs
+      - registry:registry
 
   gogs:
     image: gogs/gogs:0.11.43
@@ -21,3 +22,18 @@ services:
       - "10080:3000"
     volumes:
       - ./temp/gogs:/data
+
+  registry:
+    image: registry:2
+    ports:
+      - 5000:5000
+    environment:
+      - REGISTRY_AUTH=htpasswd
+      - REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd
+      - REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm
+      - REGISTRY_HTTP_TLS_KEY=/certs/registry.key
+      - REGISTRY_HTTP_TLS_CERTIFICATE=/certs/registry.crt
+    volumes:
+      - ./auth:/auth
+      - ./certs:/certs
+      - ./temp/registry:/var/lib/registry
