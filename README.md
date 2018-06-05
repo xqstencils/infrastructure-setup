@@ -33,5 +33,9 @@ $> docker-compose up -d
 $> ./init/deploy.sh <my-server>
 ```
 
+**NOTES**:
+1. The username & password are `admin` & `admin` when docker login registry.demo.com
+2. When you setup your remote service, pls change the domain name and ssl certificates.
+
 ## License
 Code is under the [MIT license](./LICENSE).
